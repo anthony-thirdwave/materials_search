@@ -13,6 +13,7 @@ gem 'jbuilder', '~> 2.5'
 # Front End
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'haml-rails', '~> 0.9.0'
+gem 'simple_form', '~> 3.3', '>= 3.3.1'
 
 # Testing PgSearch
 gem 'pg_search'

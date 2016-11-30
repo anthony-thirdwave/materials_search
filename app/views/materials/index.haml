@@ -1,0 +1,19 @@
+.container
+  .row
+    .col-md-12{:style => "margin-left:120px"}
+      %h4 Start your search here.
+      %form.form-inline.float-lg-right
+        %input.form-control{:placeholder => "Keyword, Company, etc..", :type => "text"}/
+        %button.btn.btn-outline-success{:type => "submit", :class => "btn-primary btn"} Search
+%hr
+.container
+  .col-sm-10.col-sm-offset-1.col-xs-12.blog-content
+    - @materials.each do |material|
+      .col-xs-12
+        %h2{:style => "color:brown"}= material.section
+        %h3{:style => "color:blue"}= material.cat_1
+        %h4{:style => "color:green"}= material.cat_2
+        %h5{:style => "color:red"}= material.cat_3
+        .text-center
+          = link_to "[view]", material_path(material)
+        %br/

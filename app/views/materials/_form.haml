@@ -1,0 +1,26 @@
+.container
+  .row
+    = simple_form_for @material do |f|
+      - if @material.errors.any?
+        #error_explanation
+          %h2
+            = "#{pluralize(@material.errors.count, "error")} prohibited this material from being saved:"
+          %ul
+            - @material.erros.full_messages.each do |msg|
+              %li
+                = msg
+      .row
+        .col-md-12
+          .form-group
+            = f.input :section, class: "form-control"
+        .col-md-12
+          .form-group
+            = f.input :cat_1, class: "form-control"
+        .col-md-12
+          .form-group
+            = f.input :cat_2, class: "form-control"
+        .col-md-12
+          .form-group
+            = f.input :cat_3, class: "form-control"
+      .form-group
+        = f.button :submit
