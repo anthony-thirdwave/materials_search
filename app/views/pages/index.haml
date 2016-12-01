@@ -6,10 +6,9 @@
       %h2 Search for your materials here!
       #custom-search-input
         .input-group.col-md-12
-          %input.search-query.form-control{:placeholder => "Search", :type => "text"}/
-          %span.input-group-btn
-            %button.btn.btn-success{:type => "button"}
-              %span.glyphicon.glyphicon-search
+          = form_tag({:conttroller=>"materials", :action=>"index"}, :method=>"get") do
+            = text_field_tag :search, params[:search]
+            = submit_tag "Search"
       %hr
 
 
@@ -19,12 +18,14 @@
       %h2 Materials
       - @materials.each do |material|
         .col-xs-12
+          %p= material.id
           %h2{:style => "color:brown"}= material.section
           %h3{:style => "color:blue"}= material.cat_1
           %h4{:style => "color:green"}= material.cat_2
           %h5{:style => "color:red"}= material.cat_3
           %hr
     .col-md-6
+      %h2 Companies
       - @companies.each do |company|
         .col-xs-12
           %h2= company.name

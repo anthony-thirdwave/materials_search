@@ -18,6 +18,7 @@ gem 'country_select'
 
 # Testing PgSearch
 gem 'pg_search'
+gem 'textacular'
 
 group :development, :test do
   gem 'byebug', platform: :mri

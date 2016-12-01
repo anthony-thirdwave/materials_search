@@ -165,6 +165,32 @@ CREATE TABLE materials (
 
 
 --
+-- Name: material_searches; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW material_searches AS
+ SELECT materials.id AS searchable_id,
+    'Material'::text AS searchable_type,
+    materials.section AS term
+   FROM materials
+UNION
+ SELECT materials.id AS searchable_id,
+    'Material'::text AS searchable_type,
+    materials.cat_1 AS term
+   FROM materials
+UNION
+ SELECT materials.id AS searchable_id,
+    'Material'::text AS searchable_type,
+    materials.cat_2 AS term
+   FROM materials
+UNION
+ SELECT materials.id AS searchable_id,
+    'Material'::text AS searchable_type,
+    materials.cat_3 AS term
+   FROM materials;
+
+
+--
 -- Name: materials_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -316,6 +342,34 @@ CREATE INDEX index_companies_materials_on_material_id ON companies_materials USI
 
 
 --
+-- Name: index_materials_on_cat_1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_materials_on_cat_1 ON materials USING gin (to_tsvector('english'::regconfig, (cat_1)::text));
+
+
+--
+-- Name: index_materials_on_cat_2; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_materials_on_cat_2 ON materials USING gin (to_tsvector('english'::regconfig, (cat_2)::text));
+
+
+--
+-- Name: index_materials_on_cat_3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_materials_on_cat_3 ON materials USING gin (to_tsvector('english'::regconfig, (cat_3)::text));
+
+
+--
+-- Name: index_materials_on_section; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_materials_on_section ON materials USING gin (to_tsvector('english'::regconfig, (section)::text));
+
+
+--
 -- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -344,6 +398,6 @@ ALTER TABLE ONLY companies_materials
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161130204303'), ('20161130204309'), ('20161130205808'), ('20161130231330'), ('20161201172207');
+INSERT INTO schema_migrations (version) VALUES ('20161130204303'), ('20161130204309'), ('20161130205808'), ('20161130231330'), ('20161201172207'), ('20161201184531'), ('20161201185146');
 
 
