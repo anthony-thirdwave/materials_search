@@ -24,10 +24,12 @@ gem 'textacular'
 gem 'elasticsearch'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+gem 'searchkick'
 
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'better_errors', '~> 2.1', '>= 2.1.1'
+  gem 'binding_of_caller'
 
   # Testing
   gem 'rspec-rails', '~> 3.5.2'

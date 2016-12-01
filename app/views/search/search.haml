@@ -4,12 +4,13 @@
       %h1 Materials App
       %hr
       %h2 Search for your materials here!
-      .input-group.col-md-12
-      = form_for search_path, method: :get do |f|
-        %p
-          = f.label "Search for"
-          = text_field_tag :query, params[:query], class: 'form-control typeahead', id: "material_search"
-          = submit_tag "Go", name: nil
+      #custom-search-input
+        .input-group.col-md-12
+        = form_for search_path, method: :get do |f|
+          %p
+            = f.label "Search for"
+            = text_field_tag :q, params[:q], id: "material_search"
+            = submit_tag "Go", name: nil
       %hr
 .container
   .row

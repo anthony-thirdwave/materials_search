@@ -3,7 +3,19 @@ class MaterialsController < ApplicationController
 
 	# Index action to render all materials
 	def index
-		@materials = Material.all
+		@companies = []
+    if params[:query].nil?
+      @materials = []
+    else
+      @materials = Material.search params[:query]
+      @materials.each do |material|
+        material.companies.each do |company|
+          if !@companies.include? company
+            @companies << company
+          end
+        end
+      end
+    end
 	end
 
 	# New action for creating material
@@ -49,6 +61,12 @@ class MaterialsController < ApplicationController
 			redirect_to materials_path
 		else
 			flash[:alert] = "Error updating material!"
+		end
+	end
+
+	def autocomplete
+		render json: Material.search(params[:query], autocomplete: false, limit: 10).map do |material|
+			{ title: material.cat_2, value: material.id }
 		end
 	end
 
