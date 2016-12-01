@@ -31,7 +31,7 @@ class MaterialsController < ApplicationController
 	def update
 		if @material.update_attributes(material_params)
 			flash[:notice] = "Successfully updated material!"
-			redirect_to material_path(@materials)
+			redirect_to material_path(@material)
 		else
 			flash[:alert] = "Error updating material!"
 			render :edit

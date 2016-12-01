@@ -1,11 +1,13 @@
-.navbar.navbar-default.navbar-static-top
-  .container
-    %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
-    %a.navbar-brand= link_to 'Materials Directory', root_path
-    .navbar-collapse.collapse.navbar-responsive-collapse
+%nav.navbar.navbar-default
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "/"} Materials App
+    #navbar.navbar-collapse.collapse
       %ul.nav.navbar-nav
-        %li= link_to "Materials", materials_path
-        %li= link_to "New Material", new_material_path
+        %li= link_to 'New Material', new_material_path
+        %li= link_to 'New Company', new_company_path

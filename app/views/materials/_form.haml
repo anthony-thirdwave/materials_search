@@ -6,7 +6,7 @@
           %h2
             = "#{pluralize(@material.errors.count, "error")} prohibited this material from being saved:"
           %ul
-            - @material.erros.full_messages.each do |msg|
+            - @material.errors.full_messages.each do |msg|
               %li
                 = msg
       .row

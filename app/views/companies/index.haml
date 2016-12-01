@@ -1,0 +1,21 @@
+.container
+  .row
+    .col-md-12{:style => "margin-left:120px"}
+      %h4 Start your search here.
+      %form.form-inline.float-lg-right
+        %input.form-control{:placeholder => "Keyword, Company, etc..", :type => "text"}/
+        %button.btn.btn-outline-success{:type => "submit", :class => "btn-primary btn"} Search
+%hr
+.container
+  .col-sm-10.col-sm-offset-1.col-xs-12.blog-content
+    - @companies.each do |company|
+      .col-xs-12
+        %h2= company.name
+        %h5= company.address
+        %h5= company.city
+        %h5= company.state
+        %h5= company.zip
+        %h5= company.country
+        .text-center
+          = link_to "[view]", company_path(company)
+        %br/

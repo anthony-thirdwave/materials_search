@@ -86,6 +86,70 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: companies; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE companies (
+    id integer NOT NULL,
+    name character varying,
+    address character varying,
+    city character varying,
+    state character varying,
+    zip integer,
+    country character varying
+);
+
+
+--
+-- Name: companies_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE companies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE companies_id_seq OWNED BY companies.id;
+
+
+--
+-- Name: companies_materials; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE companies_materials (
+    id integer NOT NULL,
+    material_id integer,
+    company_id integer
+);
+
+
+--
+-- Name: companies_materials_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE companies_materials_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: companies_materials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE companies_materials_id_seq OWNED BY companies_materials.id;
+
+
+--
 -- Name: materials; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -162,6 +226,20 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: companies id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY companies ALTER COLUMN id SET DEFAULT nextval('companies_id_seq'::regclass);
+
+
+--
+-- Name: companies_materials id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY companies_materials ALTER COLUMN id SET DEFAULT nextval('companies_materials_id_seq'::regclass);
+
+
+--
 -- Name: materials id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -181,6 +259,22 @@ ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_sea
 
 ALTER TABLE ONLY ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: companies_materials companies_materials_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY companies_materials
+    ADD CONSTRAINT companies_materials_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY companies
+    ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
 
 
 --
@@ -208,10 +302,40 @@ ALTER TABLE ONLY schema_migrations
 
 
 --
+-- Name: index_companies_materials_on_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_companies_materials_on_company_id ON companies_materials USING btree (company_id);
+
+
+--
+-- Name: index_companies_materials_on_material_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_companies_materials_on_material_id ON companies_materials USING btree (material_id);
+
+
+--
 -- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON pg_search_documents USING btree (searchable_type, searchable_id);
+
+
+--
+-- Name: companies_materials fk_rails_062af2afe6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY companies_materials
+    ADD CONSTRAINT fk_rails_062af2afe6 FOREIGN KEY (material_id) REFERENCES materials(id);
+
+
+--
+-- Name: companies_materials fk_rails_cf71c91e48; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY companies_materials
+    ADD CONSTRAINT fk_rails_cf71c91e48 FOREIGN KEY (company_id) REFERENCES companies(id);
 
 
 --
@@ -220,6 +344,6 @@ CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON p
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161130204303'), ('20161130204309'), ('20161130205808');
+INSERT INTO schema_migrations (version) VALUES ('20161130204303'), ('20161130204309'), ('20161130205808'), ('20161130231330'), ('20161201172207');
 
 
