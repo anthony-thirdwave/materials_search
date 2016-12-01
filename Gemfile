@@ -20,6 +20,11 @@ gem 'country_select'
 gem 'pg_search'
 gem 'textacular'
 
+# Testing Elastic Search
+gem 'elasticsearch'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'better_errors', '~> 2.1', '>= 2.1.1'
