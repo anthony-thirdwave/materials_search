@@ -3,19 +3,9 @@ class MaterialsController < ApplicationController
 
 	# Index action to render all materials
 	def index
-		@companies = []
-    if params[:query].nil?
-      @materials = []
-    else
-      @materials = Material.search params[:query]
-      @materials.each do |material|
-        material.companies.each do |company|
-          if !@companies.include? company
-            @companies << company
-          end
-        end
-      end
-    end
+		query = params[:query].presence || '*'
+    @materials = Material.search query
+    @companies = @materials.map(&:companies).flatten.uniq
 	end
 
 	# New action for creating material
@@ -65,9 +55,7 @@ class MaterialsController < ApplicationController
 	end
 
 	def autocomplete
-		render json: Material.search(params[:query], autocomplete: false, limit: 10).map do |material|
-			{ title: material.cat_2, value: material.id }
-		end
+		render json: Material.search(params[:term], fields: [{cat_2: :text_start}], limit: 10).map(&:cat_2)
 	end
 
 	private
