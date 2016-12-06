@@ -6,5 +6,4 @@ Rails.application.routes.draw do
     end
   end
   resources :companies
-  get 'search', to: 'search#search'
 end

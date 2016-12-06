@@ -6,6 +6,15 @@ class MaterialsController < ApplicationController
 		query = params[:query].presence || '*'
     @materials = Material.search query
     @companies = @materials.map(&:companies).flatten.uniq
+
+		# Needs to be refactored
+		if @companies.map(&:name).include? query
+			@companies.each do |company|
+				if company.name = query
+					@companies = [company]
+				end
+			end
+		end
 	end
 
 	# New action for creating material
@@ -57,8 +66,9 @@ class MaterialsController < ApplicationController
 	def autocomplete
 		a = Material.search(params[:term], fields: [{cat_2: :text_start}], limit: 10).map(&:cat_2)
 		b = Company.search(params[:term], fields: [{name: :text_start}], limit: 10).map(&:name)
-		c = a + b
-		render json: c
+		c = Material.search(params[:term], fields: [{cat_2: :text_start}], limit: 10).map(&:cat_3)
+		d = (a + b + c).uniq
+		render json: d
 	end
 
 	private
