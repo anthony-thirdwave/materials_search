@@ -4,4 +4,5 @@ class Company < ActiveRecord::Base
   validates :city, presence: true
   validates :state, presence: true
   validates :country, presence: true
+  searchkick text_start: [:name]
 end

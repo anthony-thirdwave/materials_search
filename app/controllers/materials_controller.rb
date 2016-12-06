@@ -55,7 +55,10 @@ class MaterialsController < ApplicationController
 	end
 
 	def autocomplete
-		render json: Material.search(params[:term], fields: [{cat_2: :text_start}], limit: 10).map(&:cat_2)
+		a = Material.search(params[:term], fields: [{cat_2: :text_start}], limit: 10).map(&:cat_2)
+		b = Company.search(params[:term], fields: [{name: :text_start}], limit: 10).map(&:name)
+		c = a + b
+		render json: c
 	end
 
 	private

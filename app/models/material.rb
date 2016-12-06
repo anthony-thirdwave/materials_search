@@ -6,4 +6,9 @@ class Material < ActiveRecord::Base
   validates :cat_2, presence: true
 
   searchkick text_start: [:cat_2]
+  def search_data
+    attributes.merge(
+      companies_name: companies.map(&:name)
+    )
+  end
 end
