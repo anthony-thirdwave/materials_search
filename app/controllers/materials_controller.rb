@@ -64,6 +64,12 @@ class MaterialsController < ApplicationController
 		end
 	end
 
+	def filters
+	  allowed_filters = %w(cat_1 size)
+	  filters = params.select{|k, v| allowed_filters.include?(k) }
+	end
+	helper_method :filters
+
 	def autocomplete
 		a = Material.search(params[:term], fields: [{cat_2: :text_start}], limit: 10).map(&:cat_2)
 		b = Company.search(params[:term], fields: [{name: :text_start}], limit: 10).map(&:name)

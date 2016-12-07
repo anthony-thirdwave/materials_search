@@ -57,7 +57,8 @@
       - @materials.each do |material|
         .col-xs-12
           .panel.panel-default
-            .panel-heading= material.section
+            .panel-heading
+              %h5= material.section
             %ul.list-group
               %li.list-group-item= material.cat_1
               %li.list-group-item= material.cat_2
@@ -69,7 +70,8 @@
       - @companies.each do |company|
         .col-xs-12
           .panel.panel-default
-            .panel-heading= company.name
+            .panel-heading
+              %h5= company.name
             %ul.list-group
               %li.list-group-item= company.address
               %li.list-group-item
