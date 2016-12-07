@@ -1,7 +1,11 @@
 #TODO
 
-- [ ] Add companies that deal with materials
+- [x] Add companies that deal with materials
 
-- [ ] Add man2many associations between companies and materials
+- [x] Add man2many associations between companies and materials
 
-- [ ] Implement search functionality
+- [x] Implement search functionality
+
+- [x] Implemented Facets
+
+- [ ] Fix Facets to be more intuitive / responsive
