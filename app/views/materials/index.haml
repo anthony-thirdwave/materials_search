@@ -13,7 +13,14 @@
       %hr
 .container
   .row
-    .col-md-6
+    .col-md-4
+      - m = @materials.aggs.to_a
+      - m.each do |mat|
+        - if !mat[1]["buckets"][0]["key"].blank?
+          %li
+            = mat[1]["buckets"][0]["key"]
+            (#{mat[1]["buckets"][0]["doc_count"]})
+    .col-md-4
       %h2 Materials
       - @materials.each do |material|
         .col-xs-12
@@ -23,7 +30,7 @@
           %h4{:style => "color:green"}= material.cat_2
           %h5{:style => "color:red"}= material.cat_3
           %hr
-    .col-md-6
+    .col-md-4
       %h2 Companies
       - @companies.each do |company|
         .col-xs-12

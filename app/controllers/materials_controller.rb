@@ -4,8 +4,9 @@ class MaterialsController < ApplicationController
 	# Index action to render all materials
 	def index
 		query = params[:query].presence || '*'
-    @materials = Material.search query
+    @materials = Material.search query, aggs: [:section, :cat_1, :cat_2, :cat_3]
     @companies = @materials.map(&:companies).flatten.uniq
+		@aggs = @materials.aggs
 
 		# Needs to be refactored
 		if @companies.map(&:name).include? query
