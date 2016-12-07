@@ -2,7 +2,7 @@
 
 - [x] Add companies that deal with materials
 
-- [x] Add man2many associations between companies and materials
+- [x] Add many2many associations between companies and materials
 
 - [x] Implement search functionality
 

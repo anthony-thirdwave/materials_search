@@ -14,7 +14,7 @@
       %hr
 .container
   .row
-    .col-md-12
+    .col-md-9{:style => "margin-left:20px;"}
       %h4 Reset Search
       = link_to "Reset", "/materials", class: "btn-sm btn-success"
       %hr
@@ -26,7 +26,7 @@
               %h4 Filter by Section
               - @materials.aggs["section"]["buckets"].each do |filter|
                 .list-group
-                  = link_to "/materials?query=#{params['query']}+#{filter['key']}", :class => "list-group-item list-group-item-action" do
+                  = link_to "/materials?query=#{filter['key']}", :class => "list-group-item list-group-item-action" do
                     = filter["key"]
                     %span.badge
                       = filter["doc_count"]
@@ -37,7 +37,7 @@
               %h4 Filter by Type
               - @materials.aggs["cat_1"]["buckets"].each do |filter|
                 .list-group
-                  = link_to "/materials?query=#{params['query']}+#{filter['key']}", :class => "list-group-item list-group-item-action" do
+                  = link_to "/materials?query=#{filter['key']}", :class => "list-group-item list-group-item-action" do
                     = filter["key"]
                     %span.badge
                       = filter["doc_count"]
@@ -48,28 +48,33 @@
               %h4 Filter by Shape
               - @materials.aggs["cat_2"]["buckets"].each do |filter|
                 .list-group
-                  = link_to "/materials?query=#{params['query']}+#{filter['key']}", :class => "list-group-item list-group-item-action" do
+                  = link_to "/materials?query=#{filter['key']}", :class => "list-group-item list-group-item-action" do
                     = filter["key"]
                     %span.badge
                       = filter["doc_count"]
     .col-md-4
-      %h2 Materials
+      %h4 Results (Materials)
       - @materials.each do |material|
         .col-xs-12
-          %p= material.id
-          %h2{:style => "color:brown"}= material.section
-          %h3{:style => "color:blue"}= material.cat_1
-          %h4{:style => "color:green"}= material.cat_2
-          %h5{:style => "color:red"}= material.cat_3
+          .panel.panel-default
+            .panel-heading= material.section
+            %ul.list-group
+              %li.list-group-item= material.cat_1
+              %li.list-group-item= material.cat_2
+              - if !material.cat_3.blank?
+                %li.list-group-item= material.cat_3
           %hr
     .col-md-4
-      %h2 Companies
+      %h4 Results (Companies)
       - @companies.each do |company|
         .col-xs-12
-          %h2= company.name
-          %h5= company.address
-          %h5= company.city
-          %h5= company.state
-          %h5= company.zip
-          %h5= company.country
+          .panel.panel-default
+            .panel-heading= company.name
+            %ul.list-group
+              %li.list-group-item= company.address
+              %li.list-group-item
+                = company.city
+                = company.state
+                = company.zip
+              %li.list-group-item= company.country
           %hr

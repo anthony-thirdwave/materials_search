@@ -1,37 +1,4 @@
-.container
-  .row
-    .col-md-12
-      %h1 Materials App
-      %hr
-      %h2 Search for your materials here!
-      #custom-search-input
-        .input-group.col-md-12
-          = form_tag({:conttroller=>"materials", :action=>"index"}, :method=>"get") do
-            = text_field_tag :search, params[:search]
-            = submit_tag "Search"
-      %hr
-
-
-.container
-  .row
-    .col-md-6
-      %h2 Materials
-      - @materials.each do |material|
-        .col-xs-12
-          %p= material.id
-          %h2{:style => "color:brown"}= material.section
-          %h3{:style => "color:blue"}= material.cat_1
-          %h4{:style => "color:green"}= material.cat_2
-          %h5{:style => "color:red"}= material.cat_3
-          %hr
-    .col-md-6
-      %h2 Companies
-      - @companies.each do |company|
-        .col-xs-12
-          %h2= company.name
-          %h5= company.address
-          %h5= company.city
-          %h5= company.state
-          %h5= company.zip
-          %h5= company.country
-          %hr
+.row.text-center{:style => "margin-top: 100px;"}
+  %h1 Metals Directory
+  %h4{:style => "margin-bottom:20px;"} Start Searching Now!
+  = link_to "Search", materials_path, class: "btn-lg btn-success"
