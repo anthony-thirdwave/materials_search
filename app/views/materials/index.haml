@@ -6,22 +6,52 @@
       %h2 Search for your materials here!
       .input-group.col-md-12
       = form_for materials_path, method: :get do |f|
-        %p
-          = f.label "Search for"
-          = text_field_tag :query, params[:query], class: 'input form-control', id: "material_search"
-          = submit_tag "Go", name: nil
+        .col-md-6
+          = text_field_tag :query, params[:query], class: 'form-control', id: "material_search"
+        .col-md-4
+          %span.input-group-btn
+            = submit_tag "Search", name: nil, class: "btn btn-success"
       %hr
 .container
   .row
+    .col-md-12
+      %h4 Reset Search
+      = link_to "Reset", "/materials", class: "btn-sm btn-success"
+      %hr
     .col-md-4
-      - m = @materials.aggs.to_a
-      - o = ["Materials", "Proprietary metals and other alloys", "Aluminum"]
-      .btn-group-vertical{:style => "margin-top:30px;"}
-        - m.each do |mat|
-          - if !mat[1]["buckets"][0]["key"].blank?
-            = link_to mat[1]["buckets"][0]["key"] + " " + mat[1]["buckets"][0]["doc_count"].to_s,
-                        "/materials?query=#{params[:query]}+#{mat[1]["buckets"][0]["key"]}",
-                        :class => "btn btn-success"
+      .col-md-12
+        - if @materials.aggs.present?
+          - if @materials.aggs["section"]["buckets"].count > 0
+            .widget
+              %h4 Filter by Section
+              - @materials.aggs["section"]["buckets"].each do |filter|
+                .list-group
+                  = link_to "/materials?query=#{params['query']}+#{filter['key']}", :class => "list-group-item list-group-item-action" do
+                    = filter["key"]
+                    %span.badge
+                      = filter["doc_count"]
+      .col-md-12
+        - if @materials.aggs.present?
+          - if @materials.aggs["cat_1"]["buckets"].count > 0
+            .widget
+              %h4 Filter by Type
+              - @materials.aggs["cat_1"]["buckets"].each do |filter|
+                .list-group
+                  = link_to "/materials?query=#{params['query']}+#{filter['key']}", :class => "list-group-item list-group-item-action" do
+                    = filter["key"]
+                    %span.badge
+                      = filter["doc_count"]
+      .col-md-12
+        - if @materials.aggs.present?
+          - if @materials.aggs["cat_2"]["buckets"].count > 0
+            .widget
+              %h4 Filter by Shape
+              - @materials.aggs["cat_2"]["buckets"].each do |filter|
+                .list-group
+                  = link_to "/materials?query=#{params['query']}+#{filter['key']}", :class => "list-group-item list-group-item-action" do
+                    = filter["key"]
+                    %span.badge
+                      = filter["doc_count"]
     .col-md-4
       %h2 Materials
       - @materials.each do |material|
