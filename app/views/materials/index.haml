@@ -15,11 +15,13 @@
   .row
     .col-md-4
       - m = @materials.aggs.to_a
-      - m.each do |mat|
-        - if !mat[1]["buckets"][0]["key"].blank?
-          %li
-            = mat[1]["buckets"][0]["key"]
-            (#{mat[1]["buckets"][0]["doc_count"]})
+      - o = ["Materials", "Proprietary metals and other alloys", "Aluminum"]
+      .btn-group-vertical{:style => "margin-top:30px;"}
+        - m.each do |mat|
+          - if !mat[1]["buckets"][0]["key"].blank?
+            = link_to mat[1]["buckets"][0]["key"] + " " + mat[1]["buckets"][0]["doc_count"].to_s,
+                        "/materials?query=#{params[:query]}+#{mat[1]["buckets"][0]["key"]}",
+                        :class => "btn btn-success"
     .col-md-4
       %h2 Materials
       - @materials.each do |material|
