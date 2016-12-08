@@ -1,13 +1,13 @@
 .container
   .row
     .col-md-12
-      %h1 Materials App
+      %h1{:style => "margin-left: 15px;"} Materials App
       %hr
-      %h2 Search for your materials here!
-      .input-group.col-md-12
+      %h2{:style => "margin-left: 15px;"} Search for your materials here!
+      .input-group
       = form_for materials_path, method: :get do |f|
         .col-md-6
-          = text_field_tag :query, params[:query], class: 'form-control', id: "material_search"
+          = text_field_tag :query, params[:query], where: {cat_1: "Proprietary metals and other alloys"}, class: 'form-control', id: "material_search"
         .col-md-4
           %span.input-group-btn
             = submit_tag "Search", name: nil, class: "btn btn-success"
@@ -29,7 +29,7 @@
                   = link_to "/materials?query=#{filter['key']}", :class => "list-group-item list-group-item-action" do
                     = filter["key"]
                     %span.badge
-                      = filter["doc_count"]
+                      = @companies.size
       .col-md-12
         - if @materials.aggs.present?
           - if @materials.aggs["cat_1"]["buckets"].count > 0
@@ -40,7 +40,7 @@
                   = link_to "/materials?query=#{filter['key']}", :class => "list-group-item list-group-item-action" do
                     = filter["key"]
                     %span.badge
-                      = filter["doc_count"]
+                      = @companies.size
       .col-md-12
         - if @materials.aggs.present?
           - if @materials.aggs["cat_2"]["buckets"].count > 0
@@ -51,8 +51,11 @@
                   = link_to "/materials?query=#{filter['key']}", :class => "list-group-item list-group-item-action" do
                     = filter["key"]
                     %span.badge
-                      = filter["doc_count"]
-    .col-md-4
+                      - if @materials.map(&:cat_2).include? filter["key"]
+                        - @materials.each do |material|
+                          - if material.cat_2 == filter["key"]
+                            = material.companies.size
+    .col-md-4{:style => "background-color: #fff0e2"}
       %h4 Results (Materials)
       - @materials.each do |material|
         .col-xs-12
@@ -65,7 +68,7 @@
               - if !material.cat_3.blank?
                 %li.list-group-item= material.cat_3
           %hr
-    .col-md-4
+    .col-md-4{:style => "background-color: #e2edff;"}
       %h4 Results (Companies)
       - @companies.each do |company|
         .col-xs-12
